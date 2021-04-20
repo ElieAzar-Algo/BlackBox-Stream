@@ -39,6 +39,8 @@ function handleSuccess(stream) {
 
     const gumVideo = document.querySelector('video#localVideo');
     gumVideo.srcObject = stream;
+    const remoteVideo = document.querySelector('video#remoteVideo');
+    remoteVideo.srcObject = stream;
 }
 
 recordButton.addEventListener('click', () => {

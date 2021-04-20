@@ -28,7 +28,7 @@
         <div>
             <div id="button">
                 <button class="mdc-button mdc-button--raised" id="cameraBtn">
-                    <i class="material-icons mdc-button__icon" aria-hidden="true"></i>
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
                     <span class="mdc-button__label">Open camera & microphone</span>
                 </button>
                 <button class="mdc-button mdc-button--raised" disabled id="createBtn">
@@ -43,38 +43,10 @@
                     <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
                     <span class="mdc-button__label">Hangup</span>
                 </button>
-
-                <button class="mdc-button mdc-button--raised" id="muteBtn">
-                    <!-- <i class="material-icons mdc-button__icon" aria-hidden="true">perm_mic</i> -->
-                    <span class="mdc-button__label">Mute/Unmute</span>
-                </button>
-                <!-- <button class="mdc-button mdc-button--raised" disabled id="unmuteBtn">
-                    <span class="mdc-button__label">Unmute</span>
-                </button> -->
-
-                <button class="mdc-button mdc-button--raised" id="offBtn">
-                    <span class="mdc-button__label">Camera ON/Off</span>
-                </button>
-
-                <!-- <button class="mdc-button mdc-button--raised" disabled id="onBtn">
-                    <span class="mdc-button__label">Camera ON</span>
-                </button> -->
             </div>
 
-            <!-- <script>
-                // function stop(k) {
-                //     console.log('ddd', k)
-                //     video.srcObject.getTracks().forEach(t => t.kind == k && t.stop());
-                //     mediaStream.getAudioTracks()[0].enabled = false; // or false to mute it.
-                // }
-                console.log('ddd')
-                let stop = k => video.srcObject.getTracks().forEach(t => t.kind == k && t.stop());
-            </script> -->
-
             <div id="videos">
-
-                <video id="localVideo" muted autoplay playsinline>
-                </video>
+                <video id="localVideo" muted autoplay playsinline></video>
                 <video id="remoteVideo" autoplay playsinline></video>
 
             </div>
@@ -303,7 +275,6 @@
     }
 </style>
 <script>
-
     const start = document.getElementById("start");
     const stopbtn = document.getElementById("stop");
     const video = document.getElementById("video");

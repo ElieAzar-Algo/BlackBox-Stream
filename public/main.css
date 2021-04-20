@@ -88,3 +88,7 @@ div#videos > video {
     display: block;
     margin: 1em;
 }
+
+.rec{
+    margin-left: 50%;
+}

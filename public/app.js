@@ -20,11 +20,20 @@ let roomId = null;
 
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
+
+  document.querySelector('#muteBtn').addEventListener('click', stopAudio);
+  //document.querySelector('#unmuteBtn').addEventListener('click', onAudio);
+
+  document.querySelector('#offBtn').addEventListener('click', stopCamera);
+  // document.querySelector('#onBtn').addEventListener('click', onCamera);
+
   document.querySelector('#hangupBtn').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
   document.querySelector('#joinBtn').addEventListener('click', joinRoom);
   roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
 }
+
+
 
 async function createRoom() {
   document.querySelector('#createBtn').disabled = true;
@@ -69,7 +78,7 @@ async function createRoom() {
   roomId = roomRef.id;
   console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
   document.querySelector(
-      '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
+    '#currentRoom').innerText = `Current room is ${roomRef.id} `;
   // Code for creating a room above
 
   peerConnection.addEventListener('track', event => {
@@ -109,13 +118,13 @@ function joinRoom() {
   document.querySelector('#joinBtn').disabled = true;
 
   document.querySelector('#confirmJoinBtn').
-      addEventListener('click', async () => {
-        roomId = document.querySelector('#room-id').value;
-        console.log('Join room: ', roomId);
-        document.querySelector(
-            '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
-        await joinRoomById(roomId);
-      }, {once: true});
+    addEventListener('click', async () => {
+      roomId = document.querySelector('#room-id').value;
+      console.log('Join room: ', roomId);
+      document.querySelector(
+        '#currentRoom').innerText = `Current room is ${roomId} `;
+      await joinRoomById(roomId);
+    }, { once: true });
   roomDialog.open();
 }
 
@@ -186,8 +195,9 @@ async function joinRoomById(roomId) {
 
 async function openUserMedia(e) {
   const stream = await navigator.mediaDevices.getUserMedia(
-      {video: true, audio: true});
+    { video: true, audio: true });
   document.querySelector('#localVideo').srcObject = stream;
+  // console.log(stream)
   localStream = stream;
   remoteStream = new MediaStream();
   document.querySelector('#remoteVideo').srcObject = remoteStream;
@@ -198,6 +208,26 @@ async function openUserMedia(e) {
   document.querySelector('#createBtn').disabled = false;
   document.querySelector('#hangupBtn').disabled = false;
 }
+
+
+async function stopCamera(e) {
+  console.log('EliE VIDEO')
+  let myCamera = localStream.getVideoTracks()[0]
+  const newState = !myCamera.enabled;
+  myCamera.enabled = newState;
+  console.log("Vid off")
+}
+
+
+async function stopAudio(e) {
+  console.log('EliE Audio')
+  let myAudio = localStream.getAudioTracks()[0]
+  const newState = !myAudio.enabled;
+  myAudio.enabled = newState;
+  console.log("audio off")
+}
+
+
 
 async function hangUp(e) {
   const tracks = document.querySelector('#localVideo').srcObject.getTracks();
@@ -242,7 +272,7 @@ async function hangUp(e) {
 function registerPeerConnectionListeners() {
   peerConnection.addEventListener('icegatheringstatechange', () => {
     console.log(
-        `ICE gathering state changed: ${peerConnection.iceGatheringState}`);
+      `ICE gathering state changed: ${peerConnection.iceGatheringState}`);
   });
 
   peerConnection.addEventListener('connectionstatechange', () => {
@@ -255,7 +285,7 @@ function registerPeerConnectionListeners() {
 
   peerConnection.addEventListener('iceconnectionstatechange ', () => {
     console.log(
-        `ICE connection state change: ${peerConnection.iceConnectionState}`);
+      `ICE connection state change: ${peerConnection.iceConnectionState}`);
   });
 }
 
